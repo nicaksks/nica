@@ -46,7 +46,7 @@ async function getRepos() {
     update = r[i].updated_at;
 
     //Update;
-    var u = new Date(update).toISOString().replace('-', '/').split('T')[0].replace('-', '/');
+    var u = new Date(update).toISOString().replace(/T/, ' ').replace(/\..+/, '');
     var d1 = new Date(u);
     var d2 = new Date(date());
     var dd = parseInt((d2 - d1) / (1000 * 60 * 60 * 24));
@@ -61,7 +61,7 @@ async function getRepos() {
 
     //Descrição;
     description === null ? description = "Sem descrição" : description;
-    repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${url}" target="_blank">${name}<a/> <br>L ${description} <br></iconify-icon> <a href="${url}" target="_blank"><img src=${imgs[language]}></a> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stars} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks} <br>Atualizado ${dd}</p></div>`;
+    repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${url}" target="_blank">${name}<a/> <br>L ${description} <br></iconify-icon> <img src=${imgs[language]}> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stars} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks} <br>Atualizado ${dd}</p></div>`;
   };
 };
 
@@ -70,10 +70,14 @@ getRepos();
 function date() {
   var date = new Date();
   var yyyy = date.getFullYear() + "/";
-  var mm = ('0' + (date.getMonth()+1)).slice(-2) + "/";
+  var mm = ('0' + (date.getMonth() + 1)).slice(-2) + "/";
   var dd = ('0' + date.getDate()).slice(-2);
+ 
+  var h = ('0' + (date.getHours())).slice(-2) + ":";
+  var m = ('0' + (date.getMinutes())).slice(-2) + ":";
+  var s = ('0' + (date.getSeconds())).slice(-2);
 
-  date = yyyy + mm + dd;
+  date = yyyy + mm + dd + " " + h + m + s;
 
   return date;   
 };

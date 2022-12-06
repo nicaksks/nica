@@ -64,3 +64,15 @@ img {
 .repos img {
   width: 7%;
 }
+
+.repos a:link {
+  color: #1DA1F2;
+}
+
+.repos a:visited {
+  color: #1DA1F2;
+}
+
+.repos a:hover {
+  color: white;
+}

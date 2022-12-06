@@ -52,7 +52,7 @@ async function getRepos() {
     var dd = parseInt((d2 - d1) / (1000 * 60 * 60 * 24));
 
     if(dd <= 0) {
-      dd = `<span style="color: #1DA1F2">algumas horas</span> atrás.`
+      dd = `<span style="color: #1DA1F2">algumas minutos</span> atrás.`
     } else if (dd === 1) {
       dd = `<span style="color: #1DA1F2">${dd}</span> dia atrás.`
     } else if (dd => 2) {

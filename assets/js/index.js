@@ -46,7 +46,7 @@ async function getRepos() {
     update = r[i].pushed_at;
 
     //Update;
-    var u = new Date(update).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    var u = new Date(update).toISOString().replace('-', '/').split('T')[0].replace('-', '/');
     var d1 = new Date(u);
     var d2 = new Date(date());
     var dd = parseInt((d2 - d1) / (1000 * 60 * 60 * 24));
@@ -72,12 +72,8 @@ function date() {
   var yyyy = date.getFullYear() + "/";
   var mm = ('0' + (date.getMonth() + 1)).slice(-2) + "/";
   var dd = ('0' + date.getDate()).slice(-2);
- 
-  var h = ('0' + (date.getHours())).slice(-2) + ":";
-  var m = ('0' + (date.getMinutes())).slice(-2) + ":";
-  var s = ('0' + (date.getSeconds())).slice(-2);
 
-  date = yyyy + mm + dd + " " + h + m + s;
+  date = yyyy + mm + dd;
 
   return date;   
 };

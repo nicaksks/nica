@@ -43,7 +43,7 @@ async function getRepos() {
     language = r[i].language;
     stars = r[i].stargazers_count;
     forks = r[i].forks_count;
-    update = r[i].updated_at;
+    update = r[i].pushed_at;
 
     //Update;
     var u = new Date(update).toISOString().replace(/T/, ' ').replace(/\..+/, '');

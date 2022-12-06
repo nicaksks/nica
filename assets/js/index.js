@@ -22,7 +22,6 @@ async function getInfo() {
 
   avatar.src = r.avatar_url;
   nickname.innerHTML = r.name;
-  //bio.innerHTML = `<img src="./assets/imgs/javascript.png"> <img src="./assets/imgs/python.png"> <img src="./assets/imgs/c++.png"> <br>${r.bio} <br><span style="color:#1DA1F2">@${r.twitter_username}</span> | ${r.blog} | <span style="color:green">${r.location}</span>`;
   bio.innerHTML = `${r.bio} <br><span style="color:#1DA1F2">@${r.twitter_username}</span> | ${r.blog} | <span style="color:green">${r.location}</span>`;
   projects.innerHTML = `Repostórios público: <span style="color:#1DA1F2">${r.public_repos}</span> <br>Meus últimos <span style="color:#1DA1F2">${n}</span> repositórios`;
   footer.innerHTML = `<a href="${r.html_url}" target="_blank"><img src="./assets/imgs/logo/github.png"></a>`;
@@ -52,9 +51,17 @@ async function getRepos() {
     var d2 = new Date(date());
     var dd = parseInt((d2 - d1) / (1000 * 60 * 60 * 24));
 
+    if(dd <= 0) {
+      dd = `<span style="color: #1DA1F2">algumas horas</span> atrás.`
+    } else if (dd === 1) {
+      dd = `<span style="color: #1DA1F2">${dd}</span> dia atrás.`
+    } else if (dd => 2) {
+      dd = `<span style="color: #1DA1F2">${dd}</span> dias atrás.`
+    };
+
     //Descrição;
     description === null ? description = "Sem descrição" : description;
-    repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${url}" target="_blank">${name}<a/> <br>L ${description} <br></iconify-icon> <a href="${url}" target="_blank"><img src=${imgs[language]}></a> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stars} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks} <br> Ultima atualização <span style="color: #1DA1F2">${dd}</span> dia(s) atrás.</p></div>`;
+    repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${url}" target="_blank">${name}<a/> <br>L ${description} <br></iconify-icon> <a href="${url}" target="_blank"><img src=${imgs[language]}></a> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stars} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks} <br>Atualizado ${dd}</p></div>`;
   };
 };
 

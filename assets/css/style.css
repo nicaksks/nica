@@ -67,12 +67,16 @@ img {
 
 .repos a:link {
   color: #1DA1F2;
+  text-decoration: none;
 }
 
 .repos a:visited {
   color: #1DA1F2;
+  text-decoration: none;
 }
 
 .repos a:hover {
   color: white;
+  text-decoration: none;
+  transition: color 1s;
 }

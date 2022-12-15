@@ -15,7 +15,7 @@ html {
 }
 
 .container {
-  display: flex;
+  display: grid;
   justify-content: center;
   color: white;
 }
@@ -23,7 +23,7 @@ html {
 .card {
   display: inline-block;
   position: relative;
-  width: 20%;
+  width: 100%;
   background-color: #1E2732;
   border: solid 1px white;
   border-radius: 10px;

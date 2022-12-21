@@ -27,11 +27,12 @@ html {
   background-color: #1E2732;
   border: solid 1px white;
   border-radius: 10px;
-  padding: 2%;
+  padding: 10%;
   text-align: center;
   overflow: hidden;
   box-shadow: 0 0 10px white;
   font-size: 12px;
+  top: 25%; 
 }
 
 h1 {

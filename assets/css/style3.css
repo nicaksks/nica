@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'nica';
+  font-weight: normal;
+  font-style: normal;
+  src: url("../../assets/fonts/KGCorneroftheSky.ttf") format('truetype');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #15202B;
+  font-family: nica;
+}
+
+.container {
+  display: grid;
+  justify-content: center;
+  color: white;
+}
+
+.card {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  background-color: #1E2732;
+  border: solid 1px white;
+  border-radius: 10px;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 0 10px white;
+  font-size: 12px;
+  top: 25%; 
+}
+
+.products {
+  width: 50%;
+  margin: 2%;
+  background: none;
+  border: solid 1px white;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  font-family: nica;
+}
+
+.products span {
+  color: rgb(139, 139, 218);
+}
+
+.products:hover {
+  -moz-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+img {
+  height: 100px;
+  width: 100px;
+  float: left;
+}

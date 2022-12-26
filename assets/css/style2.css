@@ -39,15 +39,6 @@ h1 {
   letter-spacing: 2px;
 }
 
-.avatar {
-  width: 7vw;
-  height: 7vw;
-  background-size: cover;
-  background-position: top center;
-  border: solid 3px white;
-  border-radius: 50%;
-}
-
 .button {
   padding: 3%;
   width: 100%;

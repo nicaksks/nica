@@ -13,7 +13,8 @@ const imgs = {
   "HTML": "./assets/imgs/logo/html.png",
   "C++": "./assets/imgs/logo/c++.png",
   "Python": "./assets/imgs/logo/python.png",
-  "JavaScript": "./assets/imgs/logo/javascript.png"
+  "JavaScript": "./assets/imgs/logo/javascript.png",
+  "Go": "./assets/imgs/logo/go.png"
 };
 
 async function getInfo() {

@@ -24,7 +24,7 @@ async function getInfo() {
 
   avatar.src = r.avatar_url;
   nickname.innerHTML = r.name;
-  bio.innerHTML = `${r.bio} <br><span style="color:#1DA1F2">@${r.twitter_username}</span> | ${r.blog} | <span style="color:green">${r.location}</span>`;
+  bio.innerHTML = `${r.bio} <br><span><a href="https://twitter.com/${r.twitter_username}" target="_blank" style="color: #1DA1F2; text-decoration: none;">@${r.twitter_username}</a></span> | <span><a href="${r.blog}" target="_blank" style="color: white; text-decoration: none;">${r.blog.replace("https://", "")}</a></span> | <span style="color:green">${r.location}</span>`;
   projects.innerHTML = `Repostórios público: <span style="color:#1DA1F2">${r.public_repos}</span> <br>Meus últimos <span style="color:#1DA1F2">${n}</span> repositórios`;
   footer.innerHTML = `<a href="${r.html_url}" target="_blank"><img src="./assets/imgs/logo/github.png"></a>`;
 };

@@ -16,7 +16,7 @@ const imgs = {
   "Python": "./assets/imgs/logo/python.png",
   "JavaScript": "./assets/imgs/logo/javascript.png",
   "Go": "./assets/imgs/logo/go.png",
-  "C#": "./assets/imgs/logo/c#.png"
+  "C#": "./assets/imgs/logo/csharp.png"
 };
 
 async function getInfo() {

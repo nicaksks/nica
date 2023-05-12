@@ -10,7 +10,8 @@ const email = "juliesuzuya@gmail.com";
 const n = 4;
 
 async function getInfo(username, n) {
-  const { data } = await axios.get(`https://api.github.com/users/${username}`);
+  const data = await fetch(`https://api.github.com/users/${username}`)
+    .then(response => response.json());
 
   avatar.src = data.avatar_url;
   nickname.innerHTML = data.name;
@@ -23,7 +24,8 @@ async function getRepos(username, n) {
 
   getInfo(username, n);
 
-  const { data } = await axios.get(`https://api.github.com/users/${username}/repos?sort=created`);
+  const data = await fetch(`https://api.github.com/users/${username}/repos?sort=created`)
+    .then(response => response.json())
 
   let p;
   data.length > n ? p = n : p = r.length;

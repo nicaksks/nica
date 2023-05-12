@@ -9,49 +9,33 @@ const username = "nicaksks";
 const email = "juliesuzuya@gmail.com";
 const n = 4;
 
-const imgs = {
-  null: "./assets/imgs/logo/null.png",
-  "HTML": "./assets/imgs/logo/html.png",
-  "C++": "./assets/imgs/logo/c++.png",
-  "Python": "./assets/imgs/logo/python.png",
-  "JavaScript": "./assets/imgs/logo/javascript.png",
-  "Go": "./assets/imgs/logo/go.png",
-  "C#": "./assets/imgs/logo/csharp.png"
+async function getInfo(username, n) {
+  const { data } = await axios.get(`https://api.github.com/users/${username}`);
+
+  avatar.src = data.avatar_url;
+  nickname.innerHTML = data.name;
+  bio.innerHTML = `${data.bio} <br><span><a href="https://twitter.com/${data.twitter_username}" target="_blank" style="color: #1DA1F2; text-decoration: none;">@${data.twitter_username}</a></span> | <span><a href="${data.blog}" target="_blank" style="color: white; text-decoration: none;">${data.blog.replace("https://", "")}</a></span> | <span style="color:green">${data.location}</span>`;
+  projects.innerHTML = `Repostórios público: <span style="color:#1DA1F2">${data.public_repos}</span> <br>Meus últimos <span style="color:#1DA1F2">${n}</span> repositórios`;
+  footer.innerHTML = `<a href="${data.html_url}" target="_blank"><img src="./assets/imgs/logo/github.png"></a>`;
 };
 
-async function getInfo() {
-  const r = await axios.get(`https://api.github.com/users/${username}`)
-    .then(response => response.data);
+async function getRepos(username, n) {
 
-  avatar.src = r.avatar_url;
-  nickname.innerHTML = r.name;
-  bio.innerHTML = `${r.bio} <br><span><a href="https://twitter.com/${r.twitter_username}" target="_blank" style="color: #1DA1F2; text-decoration: none;">@${r.twitter_username}</a></span> | <span><a href="${r.blog}" target="_blank" style="color: white; text-decoration: none;">${r.blog.replace("https://", "")}</a></span> | <span style="color:green">${r.location}</span>`;
-  projects.innerHTML = `Repostórios público: <span style="color:#1DA1F2">${r.public_repos}</span> <br>Meus últimos <span style="color:#1DA1F2">${n}</span> repositórios`;
-  footer.innerHTML = `<a href="${r.html_url}" target="_blank"><img src="./assets/imgs/logo/github.png"></a>`;
-};
+  getInfo(username, n);
 
-async function getRepos() {
-
-  getInfo();
-
-  const r = await axios.get(`https://api.github.com/users/${username}/repos?sort=created`)
-    .then(response => response.data);
+  const { data } = await axios.get(`https://api.github.com/users/${username}/repos?sort=created`);
 
   let p;
-  r.length > n ? p = n : p = r.length;
+  data.length > n ? p = n : p = r.length;
 
   for (i = 0; i < p; i++) {
 
-    let = { html_url, full_name, description, language, stargazers_count, forks_count, pushed_at } = r[i];
+    let = { html_url, full_name, description, language, stargazers_count, forks_count, pushed_at } = data[i];
 
-    //Descrição;
     description === null ? description = "Sem descrição." : description;
-
-    repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${html_url}" target="_blank">${full_name}<a/> <br>L ${textLength(description)} <br></iconify-icon> <img src=${imgs[language]}> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stargazers_count} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks_count} <br>Atualizado ${checkDate(pushed_at)}</p></div>`;
+    repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${html_url}" target="_blank">${full_name}<a/> <br>L ${textLength(description)} <br></iconify-icon> <img src=${imgs(language)}> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stargazers_count} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks_count} <br>Atualizado ${checkDate(pushed_at)}</p></div>`;
   };
 };
-
-getRepos();
 
 function date() {
   var date = new Date();
@@ -59,9 +43,7 @@ function date() {
   var mm = ('0' + (date.getMonth() + 1)).slice(-2) + "/";
   var dd = ('0' + date.getDate()).slice(-2);
 
-  date = yyyy + mm + dd;
-
-  return date;
+  return yyyy + mm + dd;
 };
 
 function checkDate(pushed_at) {
@@ -79,17 +61,23 @@ function checkDate(pushed_at) {
   };
 
   return dd;
-}
+};
 
 function textLength(description) {
+  return description.length >= 50 ? description.substring(0, 50) + "..." : description;
+};
 
-  let text = "";
-
-  if(description.length >= 50) {
-    text = description.substring(0, 50) + "..."
-  } else {
-    text = description;
+function imgs(img) {
+  const imgs = {
+    null: "./assets/imgs/logo/null.png",
+    "HTML": "./assets/imgs/logo/html.png",
+    "C++": "./assets/imgs/logo/c++.png",
+    "Python": "./assets/imgs/logo/python.png",
+    "JavaScript": "./assets/imgs/logo/javascript.png",
+    "Go": "./assets/imgs/logo/go.png",
+    "C#": "./assets/imgs/logo/csharp.png"
   };
-
-  return text;
+  return imgs[img];
 }
+
+getRepos(username, n);

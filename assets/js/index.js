@@ -6,7 +6,6 @@ const repos = document.getElementById("repos");
 const footer = document.getElementById("footer");
 
 const username = "nicaksks";
-const email = "juliesuzuya@gmail.com";
 const n = 4;
 
 async function getInfo(username, n) {
@@ -15,8 +14,8 @@ async function getInfo(username, n) {
 
   avatar.src = data.avatar_url;
   nickname.innerHTML = data.name;
-  bio.innerHTML = `${data.bio} <br><span><a href="https://twitter.com/${data.twitter_username}" target="_blank" style="color: #1DA1F2; text-decoration: none;">@${data.twitter_username}</a></span> | <span><a href="${data.blog}" target="_blank" style="color: white; text-decoration: none;">${data.blog.replace("https://", "")}</a></span> | <span style="color:green">${data.location}</span>`;
-  projects.innerHTML = `Repostórios público: <span style="color:#1DA1F2">${data.public_repos}</span> <br>Meus últimos <span style="color:#1DA1F2">${n}</span> repositórios`;
+  bio.innerHTML = `${data.bio} <br><span><a href="https://twitter.com/${data.twitter_username}" target="_blank" style="color: #1DA1F2; text-decoration: none;">@${data.twitter_username}</a></span> | <span><a href="${data.blog}" target="_blank" style="color: white; text-decoration: none;">${data.blog.replace("https://", "")}</a></span> | <span style="color:green">${data.location}</span> <br>Following:  <span style="color:#1DA1F2">${data.following}</span> | Followers:  <span style="color:#1DA1F2">${data.followers}</span>`;
+  projects.innerHTML = `Public repositories. <span style="color:#1DA1F2">${data.public_repos}</span> <br>My last <span style="color:#1DA1F2">${n}</span> repositories.`;
   footer.innerHTML = `<a href="${data.html_url}" target="_blank"><img src="./assets/imgs/logo/github.png"></a>`;
 };
 
@@ -34,36 +33,33 @@ async function getRepos(username, n) {
 
     let = { html_url, full_name, description, language, stargazers_count, forks_count, pushed_at } = data[i];
 
-    description === null ? description = "Sem descrição." : description;
-    repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${html_url}" target="_blank">${full_name}<a/> <br>L ${textLength(description)} <br></iconify-icon> <img src=${imgs(language)}> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stargazers_count} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks_count} <br>Atualizado ${checkDate(pushed_at)}</p></div>`;
+    description === null ? description = "No Description." : description;
+    repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${html_url}" target="_blank">${full_name}<a/> <br>L ${textLength(description)} <br></iconify-icon> <img src=${imgs(language)}> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stargazers_count} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks_count} <br>Updated ${checkDate(pushed_at)}</p></div>`;
   };
-};
-
-function date() {
-  var date = new Date();
-  var yyyy = date.getFullYear() + "/";
-  var mm = ('0' + (date.getMonth() + 1)).slice(-2) + "/";
-  var dd = ('0' + date.getDate()).slice(-2);
-
-  return yyyy + mm + dd;
 };
 
 function checkDate(pushed_at) {
-  var u = new Date(pushed_at).toISOString().replace('-', '/').split('T')[0].replace('-', '/');
-  var d1 = new Date(u);
-  var d2 = new Date(date());
-  var dd = parseInt((d2 - d1) / (1000 * 60 * 60 * 24));
+  const u = new Date(pushed_at).getTime();
+  const now = Date.now();
+  const diff = now - u;
 
-  if (dd <= 0) {
-    dd = `<span style="color: #1DA1F2">algumas minutos</span> atrás.`
-  } else if (dd === 1) {
-    dd = `<span style="color: #1DA1F2">${dd}</span> dia atrás.`
-  } else if (dd >= 2) {
-    dd = `<span style="color: #1DA1F2">${dd}</span> dias atrás.`
-  };
+  const units = [
+    { label: 'month', value: 4 * 7 * 24 * 60 * 60 * 1000 },
+    { label: 'week', value: 7 * 24 * 60 * 60 * 1000 },
+    { label: 'day', value: 24 * 60 * 60 * 1000 },
+    { label: 'hour', value: 60 * 60 * 1000 },
+    { label: 'minute', value: 60 * 1000 },
+  ];
 
-  return dd;
-};
+  for (const unit of units) {
+    const count = Math.floor(diff / unit.value);
+    if (count > 0) {
+      return `<span style="color: #1DA1F2">${count} ${unit.label}${count > 1 ? 's' : ''}</span> ago`;
+    }
+  }
+
+  return `a <span style="color: #1DA1F2">few seconds</span> ago`;
+}
 
 function textLength(description) {
   return description.length >= 50 ? description.substring(0, 50) + "..." : description;

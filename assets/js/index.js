@@ -33,6 +33,8 @@ async function getRepos(username, n) {
 
     let = { html_url, full_name, description, language, stargazers_count, forks_count, pushed_at } = data[i];
 
+    console.log(language)
+
     description === null ? description = "No Description." : description;
     repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${html_url}" target="_blank">${full_name}<a/> <br>L ${textLength(description)} <br></iconify-icon> <img src=${imgs(language)}> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stargazers_count} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks_count} <br>Updated ${checkDate(pushed_at)}</p></div>`;
   };
@@ -73,7 +75,8 @@ function imgs(img) {
     "Python": "./assets/imgs/logo/python.png",
     "JavaScript": "./assets/imgs/logo/javascript.png",
     "Go": "./assets/imgs/logo/go.png",
-    "C#": "./assets/imgs/logo/csharp.png"
+    "C#": "./assets/imgs/logo/csharp.png",
+    "TypeScript": "./assets/imgs/logo/typescript.png"
   };
   return imgs[img];
 }

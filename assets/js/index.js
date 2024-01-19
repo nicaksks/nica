@@ -6,36 +6,33 @@ const repos = document.getElementById("repos");
 const footer = document.getElementById("footer");
 
 const username = "nicaksks";
-const n = 4;
 
-async function getInfo(username, n) {
-  const data = await fetch(`https://api.github.com/users/${username}`)
-    .then(response => response.json());
+async function instance(username, endpoint = "") {
+  const response = await fetch(`https://api.github.com/users/${username}${endpoint}`)
+  const data = await response.json();
+  return data;
+}
+
+async function getInfo(username) {
+  const data = await instance(username);
 
   avatar.src = data.avatar_url;
   nickname.innerHTML = data.name;
   bio.innerHTML = `${data.bio} <br><span><a href="https://twitter.com/${data.twitter_username}" target="_blank" style="color: #1DA1F2; text-decoration: none;">@${data.twitter_username}</a></span> | <span><a href="${data.blog}" target="_blank" style="color: white; text-decoration: none;">${data.blog.replace("https://", "")}</a></span> | <span style="color:green">${data.location}</span> <br>Following:  <span style="color:#1DA1F2">${data.following}</span> | Followers:  <span style="color:#1DA1F2">${data.followers}</span>`;
-  projects.innerHTML = `Public repositories. <span style="color:#1DA1F2">${data.public_repos}</span> <br>My last <span style="color:#1DA1F2">${n}</span> repositories.`;
+  projects.innerHTML = `Public repositories. <span style="color:#1DA1F2">${data.public_repos}</span> <br>My last <span style="color:#1DA1F2">4</span> repositories.`;
   footer.innerHTML = `<a href="${data.html_url}" target="_blank"><img src="./assets/imgs/logo/github.png"></a>`;
+
+  getRepos(username);
 };
 
-async function getRepos(username, n) {
+async function getRepos(username) {
+  const data = await instance(username, "/repos?sort=created");
 
-  getInfo(username, n);
-
-  const data = await fetch(`https://api.github.com/users/${username}/repos?sort=created`)
-    .then(response => response.json())
-
-  let p;
-  data.length > n ? p = n : p = r.length;
-
+  const p = data.slice(0, 4).length;
   for (i = 0; i < p; i++) {
-
     let = { html_url, full_name, description, language, stargazers_count, forks_count, pushed_at } = data[i];
 
-    console.log(language)
-
-    description === null ? description = "No Description." : description;
+    !description ? description = "No Description." : description;
     repos.innerHTML += `<div class="repos"><p><iconify-icon icon="octicon:repo-16"></iconify-icon> <a href="${html_url}" target="_blank">${full_name}<a/> <br>L ${textLength(description)} <br></iconify-icon> <img src=${imgs(language)}> <iconify-icon icon="octicon:star-fill-24" style="color: #DAAA3F"></iconify-icon> ${stargazers_count} <iconify-icon icon="octicon:repo-forked-16" style="color: gray"></iconify-icon> ${forks_count} <br>Updated ${checkDate(pushed_at)}</p></div>`;
   };
 };
@@ -76,9 +73,10 @@ function imgs(img) {
     "JavaScript": "./assets/imgs/logo/javascript.png",
     "Go": "./assets/imgs/logo/go.png",
     "C#": "./assets/imgs/logo/csharp.png",
-    "TypeScript": "./assets/imgs/logo/typescript.png"
+    "TypeScript": "./assets/imgs/logo/typescript.png",
+    "Elixir": "./assets/imgs/logo/elixir.png",
   };
-  return imgs[img];
+  return imgs[img] ?? imgs[null];
 }
 
-getRepos(username, n);
+getInfo(username);
